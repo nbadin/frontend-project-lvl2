@@ -1,10 +1,24 @@
 import * as fs from 'fs';
+import * as path from 'path';
+import yaml from 'js-yaml';
+import process from 'process';
 import getDifference from './getDifference.js';
 
-const genDiff = (filepath1, filepath2) => {
-  const firstFile = JSON.parse(fs.readFileSync(filepath1, {encoding: 'utf8'}));
-  const secondFile = JSON.parse(fs.readFileSync(filepath2, {encoding: 'utf8'}));
-  return getDifference(firstFile, secondFile);
-}
+const getObject = (filename) => {
+  const absolutePath = path.resolve(process.cwd(), filename);
+  const extname = path.extname(absolutePath);
+  if (extname === '.json') {
+    return JSON.parse(fs.readFileSync(absolutePath), { encoding: 'utf8' });
+  }
+  if (extname === '.yml' || extname === '.yaml') {
+    return yaml.load(fs.readFileSync(absolutePath), 'utf8')
+  }
+};
+
+const genDiff = (firstFile, secondFile) => {
+  const firstObject = getObject(firstFile);
+  const secondObject = getObject(secondFile);
+  return getDifference(firstObject, secondObject);
+};
 
 export default genDiff;

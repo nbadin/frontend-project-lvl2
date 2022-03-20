@@ -1,7 +1,7 @@
 import _ from 'lodash';
 
 const getDifference = (firstObject, secondObject) => {
-  const status = { affinity: '    ', add: '  + ', del: '  - '}
+  const status = { affinity: '    ', add: '  + ', del: '  - ' };
   const result = [];
   const allKeys = _.uniq([...Object.keys(firstObject), ...Object.keys(secondObject)]).sort();
   allKeys.forEach((key) => {
@@ -16,7 +16,7 @@ const getDifference = (firstObject, secondObject) => {
     } else if (!isThereAProperty && (Object.hasOwn(secondObject, key))) {
       result.push([status.add, `${key}: ${secondObject[key]}`].join(''));
     }
-  })
+  });
   result.unshift('{');
   result.push('}');
   return result.join('\n');
