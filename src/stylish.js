@@ -1,24 +1,35 @@
 import _ from 'lodash';
 
-const stylish = (object) => {
-  const statuses = { add: '  + ', delete: '  - ', equal: '    ' };
+const stylish = (tree, depth = 0) => {
+  const statuses = { added: '  + ', deleted: '  - ', equal: '    ' };
   const result = [];
-  object.forEach((element) => {
-    const indent = '    '.repeat(element.depth);
-    if (element.status === 'change') {
-      const oldValue = _.isArray(element.oldValue) ? stylish(element.oldValue) : element.oldValue;
-      const newValue = _.isArray(element.newValue) ? stylish(element.newValue) : element.newValue;
-      const firststr = [indent, statuses.delete, element.key, ': ', oldValue].join('');
-      const secondstr = [indent, statuses.add, element.key, ': ', newValue].join('');
-      result.push(firststr, secondstr);
-    } else {
-      const value = _.isArray(element.value) ? stylish(element.value) : element.value;
-      const str = [indent, statuses[element.status], element.key, ': ', value].join('');
-      result.push(str);
+  const indent = '    '.repeat(depth);
+  tree.forEach((item) => {
+    if (item.status === 'deleted') {
+      const value = _.isArray(item.value) ? stylish(item.value, depth + 1) : item.value;
+      result.push(`${indent}${statuses.deleted}${item.key}: ${value}`);
     }
-  });
-  result.unshift('{');
-  result.push(['    '.repeat(object[0].depth), '}'].join(''));
+    if (item.status === 'added') {
+      const value = _.isArray(item.value) ? stylish(item.value, depth + 1) : item.value;
+      result.push(`${indent}${statuses.added}${item.key}: ${value}`);
+    }
+    if (item.status === 'hasChildren') {
+      const value = _.isArray(item.children) ? stylish(item.children, depth + 1) : item.cildren;
+      result.push(`${indent}${statuses.equal}${item.key}: ${value}`);
+    }
+    if (item.status === 'changed') {
+      const oldValue = _.isArray(item.oldValue) ? stylish(item.oldValue, depth + 1) : item.oldValue;
+      const newValue = _.isArray(item.newValue) ? stylish(item.newValue, depth + 1) : item.newValue;
+      result.push(`${indent}${statuses.deleted}${item.key}: ${oldValue}`);
+      result.push(`${indent}${statuses.added}${item.key}: ${newValue}`);
+    }
+    if (item.status === 'equal') {
+      const value = _.isArray(item.value) ? stylish(item.value, depth + 1) : item.value;
+      result.push(`${indent}${statuses.equal}${item.key}: ${value}`);
+    }
+  })
+  result.unshift('{')
+  result.push(`${indent}}`)
   return result.join('\n');
 };
 
