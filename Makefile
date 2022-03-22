@@ -6,4 +6,3 @@ test:
 
 lint:
 	npx eslint .
-	
