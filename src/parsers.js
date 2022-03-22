@@ -12,7 +12,7 @@ const parser = (filename) => {
   if (extname === '.yml' || extname === '.yaml') {
     return yaml.load(fs.readFileSync(absolutePath), 'utf8');
   }
-  throw new Error('Unsupported format');
+  throw new Error('Unsupported format of file');
 };
 
 export default parser;

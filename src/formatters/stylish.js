@@ -1,13 +1,18 @@
 import _ from 'lodash';
 
 const stylish = (tree, depth = 0) => {
-  const statuses = { added: '  + ', deleted: '  - ', equal: '    ' };
+  const statuses = {
+    added: '  + ',
+    deleted: '  - ',
+    equal: '    ',
+    hasChildren: '    ',
+  };
   const result = [];
   const indent = '    '.repeat(depth);
   tree.forEach((item) => {
     if (item.status === 'deleted') {
       const value = _.isArray(item.value) ? stylish(item.value, depth + 1) : item.value;
-      result.push(`${indent}${statuses.deleted}${item.key}: ${value}`);
+      result.push(`${indent}${statuses[item.status]}${item.key}: ${value}`);
     }
     if (item.status === 'added') {
       const value = _.isArray(item.value) ? stylish(item.value, depth + 1) : item.value;
@@ -15,7 +20,7 @@ const stylish = (tree, depth = 0) => {
     }
     if (item.status === 'hasChildren') {
       const value = _.isArray(item.children) ? stylish(item.children, depth + 1) : item.cildren;
-      result.push(`${indent}${statuses.equal}${item.key}: ${value}`);
+      result.push(`${indent}${statuses[item.status]}${item.key}: ${value}`);
     }
     if (item.status === 'changed') {
       const oldValue = _.isArray(item.oldValue) ? stylish(item.oldValue, depth + 1) : item.oldValue;
@@ -25,11 +30,11 @@ const stylish = (tree, depth = 0) => {
     }
     if (item.status === 'equal') {
       const value = _.isArray(item.value) ? stylish(item.value, depth + 1) : item.value;
-      result.push(`${indent}${statuses.equal}${item.key}: ${value}`);
+      result.push(`${indent}${statuses[item.status]}${item.key}: ${value}`);
     }
-  })
-  result.unshift('{')
-  result.push(`${indent}}`)
+  });
+  result.unshift('{');
+  result.push(`${indent}}`);
   return result.join('\n');
 };
 

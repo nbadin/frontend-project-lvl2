@@ -1,12 +1,11 @@
 import parser from './parsers.js';
 import getTree from './getTree.js';
-import stylish from './stylish.js';
+import formatter from './formatters/index.js';
 
-const genDiff = (firstFile, secondFile) => {
+const genDiff = (firstFile, secondFile, format = 'stylish') => {
   const firstObject = parser(firstFile);
-  console.log(JSON.stringify(firstObject))
   const secondObject = parser(secondFile);
-  return stylish(getTree(firstObject, secondObject));
+  return formatter(getTree(firstObject, secondObject), format);
 };
 
 export default genDiff;
