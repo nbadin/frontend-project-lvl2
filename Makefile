@@ -6,3 +6,9 @@ test:
 
 lint:
 	npx eslint .
+
+install-dependencies:
+	npm install
+
+link:
+	npm link

@@ -1,0 +1,61 @@
+[{ "key": "common", "status": "hasChildren", "children":
+    [
+        { "key": "follow", "status": "added", "value": false },
+        { "key": "setting1", "status": "equal", "value": "Value 1" },
+        { "key": "setting2", "status": "deleted", "value": 200 },
+        { "key": "setting3", "status": "changed", "oldValue": true, "newValue": null },
+        { "key": "setting4", "status": "added", "value": "blah blah" },
+        { "key": "setting5", "status": "added", "value":
+            [
+                { "key": "key5", "status": "equal", "value": "value5" }
+            ]
+        },
+        { "key": "setting6", "status": "hasChildren", "children": 
+            [
+                { "key": "doge", "status": "hasChildren", "children": 
+                    [
+                        { "key": "wow", "status": "changed", "oldValue": "", "newValue": "so much"}
+                    ]
+                },
+                { "key": "key", "status": "equal", "value": "value"},
+                {   "key": "ops", "status": "added", "value": "vops"}
+            ]
+        }
+    ]
+},
+{ "key": "group1", "status": "hasChildren", "children": 
+    [
+        { "key": "baz", "status": "changed", "oldValue": "bas", "newValue": "bars" },
+        { "key": "foo", "status":"equal" ,"value": "bar"},
+        { "key":"nest","status":"changed","oldValue": 
+            [
+                { "key": "key", "status": "equal", "value": "value" }
+            ],
+            "newValue":"str" 
+        }
+    ]
+},
+{ "key": "group2", "status": "deleted", "value": 
+    [
+        { "key": "abc", "status": "equal", "value": 12345},
+        { "key": "deep", "status": "hasChildren", "children":
+            [
+                { "key": "id", "status": "equal", "value": 45}
+            ]
+        }
+    ]
+},
+{ "key": "group3", "status": "added", "value": 
+    [
+        { "key": "deep", "status": "hasChildren", "children": 
+            [
+                { "key": "id", "status": "hasChildren", "children": 
+                    [
+                        { "key": "number", "status": "equal", "value": 45}
+                    ]
+                }
+            ]
+        },
+        { "key": "fee", "status": "equal", "value": 100500}
+    ]
+}]

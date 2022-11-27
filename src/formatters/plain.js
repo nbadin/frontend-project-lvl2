@@ -18,20 +18,24 @@ const getDiffInString = (tree, parents = []) => {
     if (item.status === 'deleted') {
       result.push(`Property '${property}' was removed`);
     }
+
     if (item.status === 'added') {
       const value = formatterOfType(item.value);
       result.push(`Property '${property}' was added with value: ${value}`);
     }
+
     if (item.status === 'changed') {
       const oldValue = formatterOfType(item.oldValue);
       const newValue = formatterOfType(item.newValue);
       result.push(`Property '${property}' was updated. From ${oldValue} to ${newValue}`);
     }
+
     if (item.status === 'hasChildren') {
       const newParents = [...parents, item.key];
       result.push(...(getDiffInString(item.children, newParents)));
     }
   });
+
   return result;
 };
 
