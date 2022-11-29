@@ -2,15 +2,9 @@ import * as fs from 'fs';
 import process from 'process';
 import genDiff from '../src/index.js';
 
-let expectedDefault;
-let expectedPlain;
-let expectedJson;
-
-beforeAll(() => {
-  expectedDefault = fs.readFileSync('./__fixtures__/expected_default.txt', 'utf-8');
-  expectedPlain = fs.readFileSync('./__fixtures__/expected_plain.txt', 'utf-8');
-  expectedJson = JSON.parse(fs.readFileSync('./__fixtures__/expected_json.json'));
-});
+const expectedDefault = fs.readFileSync('./__fixtures__/expected_default.txt', 'utf-8');
+const expectedPlain = fs.readFileSync('./__fixtures__/expected_plain.txt', 'utf-8');
+const expectedJson = JSON.parse(fs.readFileSync('./__fixtures__/expected_json.json'));
 
 test('gendiff with yaml file', () => {
   const firstpath = `${process.cwd()}/__fixtures__/file1.yaml`;

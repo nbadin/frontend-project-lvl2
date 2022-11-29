@@ -11,33 +11,31 @@ const formatterOfType = (value) => {
   return value;
 };
 
-const getDiffInString = (tree, parents = []) => {
-  const result = [];
-  tree.forEach((item) => {
+const getDiffInString = (tree, parents = []) => tree
+  .filter((item) => item.status !== 'equal')
+  .map((item) => {
     const property = parents.length === 0 ? item.key : [...parents, item.key].join('.');
     if (item.status === 'deleted') {
-      result.push(`Property '${property}' was removed`);
+      return `Property '${property}' was removed`;
     }
 
     if (item.status === 'added') {
       const value = formatterOfType(item.value);
-      result.push(`Property '${property}' was added with value: ${value}`);
+      return `Property '${property}' was added with value: ${value}`;
     }
 
     if (item.status === 'changed') {
       const oldValue = formatterOfType(item.oldValue);
       const newValue = formatterOfType(item.newValue);
-      result.push(`Property '${property}' was updated. From ${oldValue} to ${newValue}`);
+      return `Property '${property}' was updated. From ${oldValue} to ${newValue}`;
     }
 
     if (item.status === 'hasChildren') {
       const newParents = [...parents, item.key];
-      result.push(...(getDiffInString(item.children, newParents)));
+      return [...(getDiffInString(item.children, newParents))].join('\n');
     }
+    return '';
   });
-
-  return result;
-};
 
 const plain = (tree) => getDiffInString(tree).join('\n');
 
