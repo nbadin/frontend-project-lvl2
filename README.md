@@ -4,13 +4,13 @@
 ### Description:
 Program compares two structures of json or yaml files and displays the difference.
 
-### Examples:
+### Usage
+`gendiff [options] <pathToFile1> <pathToFile2>`
+Options:
+`-V, --version output the version number`
+`-f, --format [type] Output format`
+`-h, --help output usage information`
 
-Comparison of files, json-like output format (default):
-[![asciicast](https://asciinema.org/a/493572.svg)](https://asciinema.org/a/493572)
+`[type]` - `stylish`, `plain`, `json`
+`<pathToFile>` - path to json, yaml or ini configuration file
 
-Comparison of files, plain output format:
-[![asciicast](https://asciinema.org/a/493574.svg)](https://asciinema.org/a/493574)
-
-Comparison of files, json output format:
-[![asciicast](https://asciinema.org/a/493580.svg)](https://asciinema.org/a/493580)
