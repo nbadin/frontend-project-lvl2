@@ -39,13 +39,19 @@ $ npm link
 ```
 
 ### Usage
+
 `gendiff [options] <pathToFile1> <pathToFile2>`
+
 Options:
+
 `-V, --version output the version number`
+
 `-f, --format [type] Output format`
+
 `-h, --help output usage information`
 
 `[type]` - `stylish`, `plain`, `json`
+
 `<pathToFile>` - path to json, yaml or ini configuration file
 
 1. Get stylish output diff:
